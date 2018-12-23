@@ -1,0 +1,19 @@
+문1. 직업별 가장 빠른 입사일, 가장 늦은 입사일을 검색하고 job의 오름차순으로 정렬하시오.
+	select job, min(hiredate), max(hiredate) from emp group by job order by job;
+
+문2.  직업별 월급여 평균이 1000 이상이고 직업이 MANAGER인 사원의 수를 구하시오.
+	select count(*) 사원수
+	from emp
+	where job = 'MANAGER'
+	group by job
+	having avg(sal) >= 1000;
+
+문3. data 타입이 number로만 되어있는 검색된 데이터값을 $로 표기 
+단 현재 환율 반영해서 계산해서 검색
+-- 코드
+select ename, 
+to_char(decode(job, 'ANALYSY', sal*1.05,
+			      'SALESMAN', sal*1.1,
+			      'MANAGER', sal*1.15,
+			      'CLERK', sal*1.2)*1.123, 
+	   'L99,999.999') as 연봉인상 from emp;
